@@ -16,7 +16,7 @@ Install dependencies using `npm install`
 Start the application with `npm start`
 
 ### ⚙️Technologies Used 
-Frontend: React.js
+Frontend: React.js + Vite
 Backend: Node.js, Express.js
 Database: MongoDB
 
