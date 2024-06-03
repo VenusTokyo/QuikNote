@@ -106,32 +106,66 @@ app.post("/add-note", authenticateToken, async (req, res) => {
     const { user } = req.user
 
     if (!title) {
-        return res.status(400).json({error:true, message: "Title is required" })
+        return res.status(400).json({ error: true, message: "Title is required" })
     }
     if (!content) {
-        return res.status(400).json({error:true, message: "Content is required" })
+        return res.status(400).json({ error: true, message: "Content is required" })
     }
-    try{
-        const note=new Note({
+    try {
+        const note = new Note({
             title,
             content,
-            tags:tags||[],
-            userId:user._id
+            tags: tags || [],
+            userId: user._id
         })
 
         await note.save()
 
         return res.json({
-            error:false,
+            error: false,
             note,
-            message:"Note added successfully"
+            message: "Note added successfully"
         })
-    }catch (error){
+    } catch (error) {
         return res.status(500).json({
-            error:true,
-            message:"Internal Server Error"
+            error: true,
+            message: "Internal Server Error"
         })
     }
+})
+
+app.put("/edit-note/:noteId", authenticateToken, async (req, res) => {
+    const noteId = req.params.noteId
+    const { title, content,tags,isPinned } = req.body
+    const { user } = req.user
+
+    if (!title && !content && !tags) {
+        return res.status(400).json({ error: true, message: "No Changes Provided" })
+    }
+
+    try {
+        const note = await Note.findOne({ _id: noteId, userId: user._id })
+
+        if (!note) {
+            return res.status(404).json({ error: true, message: "Note not found" })
+        }
+        if (title) note.title = title
+        if (content) note.content = content
+        if (tags) note.tags = tags
+        if (isPinned) note.isPinned = isPinned
+
+        await note.save()
+
+        return res.json({ error: false, note, message: "Note upadated succesfullly" })
+
+    }
+    catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: "Internal Server Error"
+        })
+    }
+
 })
 app.listen(8000)
 module.exports = app
