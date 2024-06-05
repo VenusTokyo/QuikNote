@@ -100,7 +100,25 @@ app.post("/login", async (req, res) => {
     }
 })
 
+//get user
+app.get("/get-user", authenticateToken, async (req, res) => {
+    const { user } = req.user
+    const isUser = await User.findOne({ _id: user._id })
 
+    if (!isUser) {
+        return res.sendStatus(401)
+    }
+
+    return res.json({
+        user: {
+            fullName: isUser.fullName,
+            email: isUser.email,
+            "_id": isUser._id,
+            createdOn: isUser.createdOn
+        },
+        message: ""
+    })
+})
 
 //add note
 app.post("/add-note", authenticateToken, async (req, res) => {
@@ -224,8 +242,8 @@ app.delete("/delete-note/:noteId", authenticateToken, async (req, res) => {
 //update isPinned value
 app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
     const noteId = req.params.noteId
-    const {user}=req.user
-    const {isPinned}=req.body
+    const { user } = req.user
+    const { isPinned } = req.body
 
     try {
         const note = await Note.findOne({ _id: noteId, userId: user._id })
@@ -233,7 +251,7 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
         if (!note) {
             return res.status(404).json({ error: true, message: "Note not found" })
         }
-        
+
         if (typeof isPinned !== 'undefined') {
             note.isPinned = isPinned;
         }
