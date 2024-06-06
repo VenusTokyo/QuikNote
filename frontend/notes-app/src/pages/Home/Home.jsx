@@ -14,6 +14,7 @@ const Home = () => {
     type: "add",
     data: null
   })
+  const [allNotes,setAllNotes]=useState([])
 
   const [userInfo, setUserInfo] = useState(null)
 
@@ -34,8 +35,23 @@ const Home = () => {
       }
     }
   }
+//get all notes 
+const getAllNotes=async()=>{
+  try{
+    const response=await axiosInstance.get("/get-all-notes")
+
+    if(response.data && response.data.notes){
+      setAllNotes(response.data.notes)
+    }
+  }
+  catch(error){
+    console.log("An unexpected error occured. Please try again.")
+  }
+}
+
   useEffect(() => {
     getUserInfo()
+    getAllNotes()
     return () => {
 
     }
@@ -47,16 +63,19 @@ const Home = () => {
       <Navbar userInfo={userInfo}/>
       <div className=" container mx-auto">
         <div className=" grid grid-cols-3 gap-4 mt-8">
+          {allNotes.map((item,index)=>(
           <NoteCard
-            title="Meeting 7th april"
-            date='3rd april 2024'
-            content="meeting with client on 7th april"
-            tags="#meeting"
-            isPinned={true}
+          key={item._id}
+            title={item.title}
+            date={item.createdOn}
+            content={item.content}
+            tags={item.tags}
+            isPinned={item.isPinned}
             onEdit={() => { }}
             onDelete={() => { }}
             onPinNote={() => { }}
           />
+          ))}
 
         </div>
       </div>
@@ -82,7 +101,9 @@ const Home = () => {
           noteData={openAddEditModal.data}
           onClose={() => {
             setOpenAddEditModal({ isShown: false, type: "add", data: null })
-          }} />
+          }} 
+          getAllNotes={getAllNotes}
+          />
       </Modal>
     </>
   )
