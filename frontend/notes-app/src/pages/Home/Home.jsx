@@ -26,7 +26,7 @@ const Home = () => {
 
   const [userInfo, setUserInfo] = useState(null)
 
-  const [isSerch, setIsSearch]=useState(false)
+  const [isSearch, setIsSearch] = useState(false)
   const navigate = useNavigate()
 
   const handleEdit = (notesDetails) => {
@@ -97,7 +97,25 @@ const Home = () => {
   }
 
   //search notes
-  
+  const onSearchNote = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search-notes", {
+        params: { query }
+      })
+
+      if (response.data && response.data.notes) {
+        setIsSearch(true)
+        setAllNotes(response.data.notes)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleClearSearch=()=>{
+    setIsSearch(false)
+    getAllNotes()
+  }
   useEffect(() => {
     getUserInfo()
     getAllNotes()
@@ -109,7 +127,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
+      <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch}/>
       <div className=" container mx-auto">
         {allNotes.length > 0 ?
           (<div className=" grid grid-cols-3 gap-4 mt-8">
@@ -127,7 +145,7 @@ const Home = () => {
               />
             ))}
           </div>) :
-          (<EmptyCard />)}
+          (<EmptyCard isSearch={isSearch}/>)}
       </div>
       <button className=' w-16 h-16 flex items-center justify-center rounded-2xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10' onClick={() => {
         setOpenAddEditModal({ isShown: true, type: "add", data: null })
