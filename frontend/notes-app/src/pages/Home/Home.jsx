@@ -26,6 +26,7 @@ const Home = () => {
 
   const [userInfo, setUserInfo] = useState(null)
 
+  const [isSerch, setIsSearch]=useState(false)
   const navigate = useNavigate()
 
   const handleEdit = (notesDetails) => {
@@ -94,6 +95,9 @@ const Home = () => {
 
     }
   }
+
+  //search notes
+  
   useEffect(() => {
     getUserInfo()
     getAllNotes()
