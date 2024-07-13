@@ -1,12 +1,56 @@
 {
     "version": 2,
     "builds": [
-        { "src": "*.js", "use": "@vercel/node" }
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "utilities.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "models/*.js",
+        "use": "@vercel/node"
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
+      {
+        "src": "/create-account",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/login",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/get-user",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/add-note",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/edit-note",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/get-all-notes",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/delete-note",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/update-note-pinned",
+        "dest": "/index.js"
+      },
+      {
+        "src": "/search-notes",
+        "dest": "/index.js"
+      }
     ]
-}
+  }
+  
