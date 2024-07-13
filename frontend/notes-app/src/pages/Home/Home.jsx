@@ -9,6 +9,7 @@ import axiosInstance from '../../utils/axiosInstance'
 import { useEffect } from 'react'
 import Toast from '../../components/ToastMessage/Toast'
 import EmptyCard from '../../components/Cards/EmptyCard'
+import {Button } from 'pixel-retroui'
 const Home = () => {
 
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -105,6 +106,7 @@ const Home = () => {
 
       if (response.data && response.data.notes) {
         setIsSearch(true)
+        console.log(isSearch)
         setAllNotes(response.data.notes)
       }
     } catch (error) {
@@ -131,6 +133,7 @@ const Home = () => {
   }
   const handleClearSearch=()=>{
     setIsSearch(false)
+    console.log(isSearch)
     getAllNotes()
   }
   useEffect(() => {
@@ -143,11 +146,11 @@ const Home = () => {
 
 
   return (
-    <>
+    <div className='relative min-h-screen bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]'>
       <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch}/>
-      <div className=" container mx-auto">
+      <div className=" container mx-auto px-7">
         {allNotes.length > 0 ?
-          (<div className=" grid grid-cols-3 gap-4 mt-8">
+          (<div className=" grid grid-cols-2 gap-4 mt-8 md:grid-cols-3">
             {allNotes.map((item, index) => (
               <NoteCard
                 key={item._id}
@@ -164,12 +167,15 @@ const Home = () => {
           </div>) :
           (<EmptyCard isSearch={isSearch}/>)}
       </div>
-      <button className=' w-16 h-16 flex items-center justify-center rounded-2xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10' onClick={() => {
+      <div className="absolute right-10 bottom-10">
+
+      
+      <Button bg='#F9A8D4' shadow='#F472B6' className=' w-16 h-16 flex items-center justify-center ' onClick={() => {
         setOpenAddEditModal({ isShown: true, type: "add", data: null })
       }}>
-        <MdAdd className=' text-[32px] text-white' />
-      </button>
-
+        <MdAdd className=' text-[45px] text-white' />
+      </Button>
+      </div>
       <Modal
         isOpen={openAddEditModal.isShown}
         onRequestClose={() => { }}
@@ -179,7 +185,7 @@ const Home = () => {
           }
         }}
         contentLabel=""
-        className=" w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 ">
+        className=" w-[40%] max-h-3/4  mx-auto mt-14 ">
 
         <AddEditNotes
           type={openAddEditModal.type}
@@ -197,7 +203,7 @@ const Home = () => {
         type={showToastMsg.type}
         onClose={handleCloseToast}
       />
-    </>
+    </div>
   )
 }
 

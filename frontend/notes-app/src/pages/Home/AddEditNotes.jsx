@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TagInput from '../../components/Input/TagInput'
 import { MdClose } from 'react-icons/md'
 import axiosInstance from '../../utils/axiosInstance'
+import { Card, Input, TextArea,Button } from 'pixel-retroui'
 
 const AddEditNotes = ({noteData,type, onClose,getAllNotes,showToastMessage }) => {
 
@@ -80,18 +81,18 @@ const AddEditNotes = ({noteData,type, onClose,getAllNotes,showToastMessage }) =>
       }
   }
   return (
-    <div className='relative'>
-      <button className='w-10 h-10 rounded-full flex justify-center items-center absolute -top-3 -right-3 hover:bg-slate-50' onClick={onClose} >
-        <MdClose className=' text-xl text-slate-400' />
+    <Card  shadowColor="#000000" className='relative p-5'>
+      <button className='w-10 h-10 rounded-full flex justify-center items-center absolute -top-3 -right-3' onClick={onClose} >
+        <MdClose className=' text-2xl text-black' />
       </button>
       <div className=" flex flex-col gap-2">
-        <label className=' input-label'>TITLE</label>
-        <input type="text" className=' text-2xl text-slate-950 outline-none' placeholder='go to gym at 5' value={title} onChange={({ target }) => setTitle(target.value)} />
+        <label className=' input-label text-black'>TITLE</label>
+        <Input type="text" className=' text-2xl text-slate-950 outline-none' placeholder='go to gym at 5' value={title} onChange={({ target }) => setTitle(target.value)} />
       </div>
 
       <div className=" flex flex-col gap-2 mt-4">
-        <label className='input-label'>CONTENT</label>
-        <textarea name="" id="" type="text" className=' text-sm text-slate-950 outline-none bg-slate-50 p-2 rounded' placeholder='Content' rows={10} value={content} onChange={({ target }) => setContent(target.value)} />
+        <label className='input-label text-black'>CONTENT</label>
+        <TextArea bg='#ffffff' name="" id="" type="text" className=' text-sm text-slate-950 outline-none p-2' placeholder='Content' rows={10} value={content} onChange={({ target }) => setContent(target.value)} />
       </div>
 
       <div className=" mt-3">
@@ -101,8 +102,8 @@ const AddEditNotes = ({noteData,type, onClose,getAllNotes,showToastMessage }) =>
 
     {error && <p className=' text-red-500 text-xs pt-4'>{error}</p>}
 
-      <button className=' btn-primary font-medium mt-5 p-3' onClick={handleAddNote}>{type==='edit'?'UPDATE':'ADD'}</button>
-    </div>
+      <Button bg='#F9A8D4' shadow='#F472B6' className='w-full font-medium text-white mt-5 mx-0' onClick={handleAddNote}>{type==='edit'?'UPDATE':'ADD'}</Button>
+    </Card>
   )
 }
 

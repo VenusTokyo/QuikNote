@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ProfileInfo from '../Cards/ProfileInfo'
 import { useNavigate } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar';
-
+import wand from '../../assets/wand.jpg'
 const Navbar = ({userInfo, onSearchNote,handleClearSearch}) => {
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -27,7 +27,12 @@ const Navbar = ({userInfo, onSearchNote,handleClearSearch}) => {
 
   return (
     <div className=' bg-white flex items-center justify-between px-6 py-2 drop-shadow'>
-      <h2 className=' text-xl font-medium text-black py-2'>Notes</h2>
+      <div className="flex items-center">
+
+      <img src={wand} className='h-16'></img>
+      <h2 className=' text-xl font-bold text-black py-2'>QuikNote</h2>
+      </div>
+
       <SearchBar
         value={searchQuery}
         onChange={({ target }) => { setSearchQuery(target.value) }}

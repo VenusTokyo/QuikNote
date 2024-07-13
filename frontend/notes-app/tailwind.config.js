@@ -8,9 +8,14 @@ export default {
     extend: {
       //colors used in the project
       colors:{primary:"#2b85ff",
-      secondary:"#ef863f"}
+      secondary:"#ef863f"},
+      fontFamily: {
+        minecraft: ["Minecraft", "sans-serif"],
+        "minecraft-bold": ["MinecraftBold", "sans-serif"],
+      },
     },
   },
+  important: true,
   plugins: [],
 }
 

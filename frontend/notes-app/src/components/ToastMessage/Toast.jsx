@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { LuCheck } from 'react-icons/lu'
 import { MdDeleteOutline } from 'react-icons/md'
+import { Card } from 'pixel-retroui'
 const Toast = ({ isShown, message, type, onClose }) => {
   useEffect(()=>{
     const timeoutId =setTimeout(()=>{
