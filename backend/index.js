@@ -3,6 +3,12 @@ const connectionString=process.env.DATABASE_URL
 const mongoose = require("mongoose")
 
 mongoose.connect(connectionString)
+.then(() => {
+  console.log('Database connection successful');
+})
+.catch(err => {
+  console.error('Database connection error:', err);
+});
 
 const User = require("./models/user.model")
 const Note = require("./models/note.model")
