@@ -1,5 +1,5 @@
 require("dotenv").config()
-const connectionString=process.env.DATABASE_URL
+const connectionString="mongodb+srv://testuser:usertest123@notesapp.xj86rfe.mongodb.net/?retryWrites=true&w=majority&appName=notesapp"
 const mongoose = require("mongoose")
 
 mongoose.connect(connectionString)
